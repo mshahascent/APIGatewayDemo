@@ -1,0 +1,162 @@
+{
+  "Routes": [
+
+    //IdentityUser API - for GetToken
+    {
+      "DownstreamPathTemplate": "/api/users/IdentityLogin",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5107"
+        }
+      ],
+      "SwaggerKey": "IdentityUsers",
+      "UpstreamPathTemplate": "/api/ArohaGateway/Identitylogin",
+      "UpstreamHttpMethod": [ "POST" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+    {
+      "DownstreamPathTemplate": "/api/users/register",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5107"
+        }
+      ],
+      "SwaggerKey": "IdentityUsers",
+      "UpstreamPathTemplate": "/api/ArohaGateway/register",
+      "UpstreamHttpMethod": [ "POST" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+    {
+      "DownstreamPathTemplate": "/api/admin/role",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5107"
+        }
+      ],
+      "SwaggerKey": "roles",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "microservice_auth_scheme",
+        "AllowedScopes": []
+      },
+      "UpstreamPathTemplate": "/api/ArohaGateway/role",
+      "UpstreamHttpMethod": [ "GET", "PUT", "DELETE", "POST" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+      //"AddHeadersToRequest": {
+      //  "claims_name": "Claims[name] > value > |",
+      //  "claims_role": "Claims[Role] > value > |"
+
+      //}
+    }
+
+
+
+    ////SImple User API - for GetToken
+    //{
+    //  "DownstreamPathTemplate": "/api/users/login?{everything}",
+    //  "DownstreamScheme": "http",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": "5107"
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/api/ArohaGateway/login?{everything}",
+    //  "UpstreamHttpMethod": [ "POST" ],
+    //  "FileCacheOptions": { "TtlSeconds": 30 }
+
+
+    //},
+    ////Simple User API - for GetByID and Delete
+    //{
+    //  "DownstreamPathTemplate": "/api/users/{id}",
+    //  "DownstreamScheme": "http",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": "5107"
+    //    }
+    //  ],
+    //  "AuthenticationOptions": {
+    //    "AuthenticationProviderKey": "microservice_auth_scheme",
+    //    "AllowedScopes": []
+    //  },
+    //  "UpstreamPathTemplate": "/api/ArohaGateway/{id}",
+    //  "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ],
+    //  "FileCacheOptions": { "TtlSeconds": 30 }
+    //},
+    ////Simple User API - for GetAllUsers
+    //{
+    //  "DownstreamPathTemplate": "/api/users",
+    //  "DownstreamScheme": "http",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": "5107"
+    //    }
+    //  ],
+    //  "AuthenticationOptions": {
+    //    "AuthenticationProviderKey": "microservice_auth_scheme",
+    //    "AllowedScopes": []
+    //  },
+    //  "UpstreamPathTemplate": "/api/ArohaGateway",
+    //  "UpstreamHttpMethod": [ "GET" ],
+    //  "FileCacheOptions": { "TtlSeconds": 30 }
+    //},
+    ////User API - for Create User
+    //{
+    //  "DownstreamPathTemplate": "/api/users",
+    //  "DownstreamScheme": "http",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": "5107"
+    //    }
+    //  ],
+    //  "AuthenticationOptions": {
+    //    "AuthenticationProviderKey": "microservice_auth_scheme",
+    //    "AllowedScopes": []
+    //  },
+    //  "UpstreamPathTemplate": "/api/ArohaGateway",
+    //  "UpstreamHttpMethod": [ "POST" ],
+    //  "FileCacheOptions": { "TtlSeconds": 30 }
+    //}
+
+
+  ],
+  //"DelegatingHandlers": [
+  //  "HeaderDelegatingHandler"
+  //],
+  "SwaggerEndPoints": [
+    {
+      "Key": "roles",
+      "TakeServersFromDownstreamService": true,
+      "Config": [
+        {
+          "Name": "Role API",
+          "Version": "v1",
+          "Url": "http://localhost:5107/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "IdentityUsers",
+      "TakeServersFromDownstreamService": true,
+      "Config": [
+        {
+          "Name": "User API",
+          "Version": "v1",
+          "Url": "http://localhost:5107/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:7106"
+  }
+}
